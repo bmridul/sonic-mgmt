@@ -466,13 +466,15 @@ def check_show_platform_sensor_output(cmd, duthost):
     logging.info("Verifying output of '{}' on '{}'...".format(cmd, duthost.hostname))
     raw_output_lines = duthost.command(cmd)["stdout_lines"]
 
-    pytest_assert(len(raw_output_lines) > 0, "There must be at least one line of output on '{}'".format(duthost.hostname))
+    pytest_assert(len(raw_output_lines) > 0, 
+                  "There must be at least one line of output on '{}'".format(duthost.hostname))
     if len(raw_output_lines) == 1:
         pytest_assert(raw_output_lines[0].strip().lower() == "sensor not detected",
                       "Unexpected sensor status output on '{}'".format(duthost.hostname))
     else:
         pytest_assert(len(raw_output_lines) > 2,
-                      "There must be at least two lines of output if any sensor is detected on '{}'".format(duthost.hostname))
+                      "There must be at least two lines of output if any sensor is detected "
+                      "on '{}'".format(duthost.hostname))
         second_line = raw_output_lines[1]
         field_ranges = util.get_field_range(second_line)
         pytest_assert(len(field_ranges) == num_expected_cols, "Output should consist of {} columns on '{}'".
