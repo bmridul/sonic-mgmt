@@ -466,7 +466,7 @@ def check_show_platform_sensor_output(cmd, duthost):
     logging.info("Verifying output of '{}' on '{}'...".format(cmd, duthost.hostname))
     raw_output_lines = duthost.command(cmd)["stdout_lines"]
 
-    pytest_assert(len(raw_output_lines) > 0, 
+    pytest_assert(len(raw_output_lines) > 0,
                   "There must be at least one line of output on '{}'".format(duthost.hostname))
     if len(raw_output_lines) == 1:
         pytest_assert(raw_output_lines[0].strip().lower() == "sensor not detected",
